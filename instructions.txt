@@ -1,0 +1,12 @@
+Good afternoon!
+
+My name is Tomas Silva Ebensperger.
+You can contact me on LinkedIn www.linkedin.com/in/tsilvaebensperger or on GitHub www.github.com/tomasemilio
+
+Before you start applying to jobs you need to do 3 things.
+
+1. Create a text file on the same directory you are running quickApply.py as 'links.txt'.
+2. Have your resume on PDF format on this same directory as 'resume.pdf'.
+3. Install BeautifulSoup, Selenium, getpass. 
+
+That is it! Run the app.
