@@ -7,6 +7,7 @@ import time, random, getpass, os
 from bs4 import BeautifulSoup
 import datetime
 import argparse
+from random import randint
 
 
 
@@ -83,12 +84,11 @@ def getNewLinks(n_pages,oldLinks,driver):
 			element.click()
 		except Exception as err:
 			print(err)
+	return links
+
 			
 
-	with open('links.txt', 'a') as f:
-		for link in links:
-			f.write(link+"|"+str(datetime.date.today()) +'\n')
-	return links
+
 
 
 
@@ -111,6 +111,7 @@ def apply(links,driver):
 			time.sleep(1)
 			job_count += 1
 			print('JOB APPLICATIONS: ', job_count)
+			randint(0,9)
 		except Exception as err:
 			print(err)
 			continue
@@ -120,20 +121,26 @@ def apply(links,driver):
 
 
 def main(resume=None, username='', password='', keywords='', location='', blacklist='', experience='', yes_to_all=False, store_no=False, count=False):
-	print('\nWelcome to AutoQuickApply by Tomas Silva Ebensperger.\n')
+	print('\nWelcome to Quick Apply.\n')
 	email = username
 	password = password
 	job = keywords
 	location = location
 	n_pages = count
 	driver = login(username,password)
-	time.sleep(2)
+	time.sleep(3)
 	search(keywords,location,driver)
+	time.sleep(3)
 	oldLinks = getOldLinks()
+	time.sleep(3)
 	links = getNewLinks(int(count),oldLinks,driver)
+	time.sleep(3)
 	print('\nYou have applied to {} total jobs.\n'.format(len(oldLinks)))
 	print('\nYou have {} new jobs to apply.\n'.format(len(links)))
 	apply(links,driver)
+	with open('links.txt', 'a') as f:
+		for link in links:
+			f.write(link+"|"+str(datetime.date.today()) +'\n')
 	driver.close()
 
 	
