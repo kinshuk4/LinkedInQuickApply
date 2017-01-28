@@ -93,7 +93,7 @@ def getNewLinks(n_pages,oldLinks,driver):
 
 
 #STEP 4: Visiting individual jobs and applying.
-def apply(links,driver):
+def apply(links,driver,resume):
 	job_count = 0
 	for link in links:
 		try:
@@ -103,7 +103,7 @@ def apply(links,driver):
 			element = driver.find_element(By.XPATH, '//*[@id="apply-job-button"]')
 			element.click()
 			time.sleep(1)
-			element = driver.find_element(By.XPATH, '//*[@id="file-browse-input"]').send_keys(os.getcwd()+'/resume.pdf')
+			element = driver.find_element(By.XPATH, '//*[@id="file-browse-input"]').send_keys(resume)
 			time.sleep(5)
 			#send-application-button
 			element = driver.find_element(By.XPATH, '//*[@id="send-application-button"]')
@@ -115,9 +115,6 @@ def apply(links,driver):
 		except Exception as err:
 			print(err)
 			continue
-
-
-
 
 
 def main(resume=None, username='', password='', keywords='', location='', blacklist='', experience='', yes_to_all=False, store_no=False, count=False):
@@ -137,7 +134,7 @@ def main(resume=None, username='', password='', keywords='', location='', blackl
 	time.sleep(3)
 	print('\nYou have applied to {} total jobs.\n'.format(len(oldLinks)))
 	print('\nYou have {} new jobs to apply.\n'.format(len(links)))
-	apply(links,driver)
+	apply(links,driver,resume)
 	with open('links.txt', 'a') as f:
 		for link in links:
 			f.write(link+"|"+str(datetime.date.today()) +'\n')
