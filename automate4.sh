@@ -30,7 +30,6 @@ keyResMap["Senior-Android-Developer"]=$androidRes
 keyResMap["Big-Data-Developer"]=$bigdataRes
 keyResMap["Senior-Data-Team-Lead"]=$bigdataRes
 keyResMap["Apache-Spark"]=$bigdataRes
-keyResMap["Full-Stack-Developer"]=$androidRes
 keyResMap["JPA"]=$javaRes
 keyResMap["hibernate"]=$javaRes
 keyResMap["spring-framework"]=$javaRes
