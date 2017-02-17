@@ -37,7 +37,7 @@ def search(job, location,driver):
 	             '//input[@placeholder="Search jobs by title, keyword or company"]')
 	jobs_input.clear()
 	jobs_input.send_keys(job)
-	location_input = driver.find_element(By.XPATH, "//input[@placeholder='City, state, or country']")
+	location_input = driver.find_element(By.XPATH, "//input[@placeholder='City, state, postal code or country']")
 	location_input.clear()
 	location_input.send_keys(location)
 	time.sleep(1)
