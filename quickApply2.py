@@ -14,7 +14,8 @@ from random import randint
 
 #STEP 1: Login 
 def login(email, password):
-	chromedriver = os.getcwd()+'/chromedriver'
+	chromedriver = os.getcwd()+"\\"+'chromedriver.exe'
+	print(chromedriver)
 	chrome_options = webdriver.ChromeOptions()
 	prefs = {"profile.default_content_setting_values.notifications" : 2}
 	chrome_options.add_experimental_option("prefs",prefs)
@@ -32,10 +33,11 @@ def login(email, password):
 #STEP 2: Jobs
 def search(job, location,driver):
 	driver.get('https://www.linkedin.com/jobs/')
-	jobs_input = driver.find_element(By.XPATH, "//input[@placeholder='Job title, keywords, or company name']")
+	jobs_input = driver.find_element(By.XPATH, 
+	             '//input[@placeholder="Search jobs by title, keyword or company"]')
 	jobs_input.clear()
 	jobs_input.send_keys(job)
-	location_input = driver.find_element(By.XPATH, "//input[@placeholder='Location']")
+	location_input = driver.find_element(By.XPATH, "//input[@placeholder='City, state, or country']")
 	location_input.clear()
 	location_input.send_keys(location)
 	time.sleep(1)
@@ -70,17 +72,17 @@ def getNewLinks(n_pages,oldLinks,driver):
 			# ->span[apply-with-profile-decoration-text]
 			soup = BeautifulSoup(driver.page_source, 'lxml')
 
-			lst = soup.find('div', {'class':'search-results-parent'}).find('ul').find_all('li', {'class':'job-listing'})
+			lst = soup.find('div', {'class':'search-result-item'}).find('ul').find_all('div', {'class':'job-card'})
 			for item in lst:
-				quick = item.find('span', {'class':'apply-with-profile-decoration-text'})
+				quick = item.find('div', {'class':'job-card__in-apply'})
 				if quick:
 					link = item.find('a')
 					modLink = link.get('href').partition('?')[0]
-					result = modLink
+					result = "https://www.linkedin.com"+modLink
 					if result not in oldLinks:
 						links.append(result)
 
-			element = driver.find_element(By.XPATH, '//*[@class="next-prev-container next-btn"]')
+			element = driver.find_element(By.XPATH, '//button[@class="next"]')
 			element.click()
 		except Exception as err:
 			print(err)
@@ -100,13 +102,13 @@ def apply(links,driver,resume):
 			driver.get(link)		
 			time.sleep(1)
 			#apply-job-button
-			element = driver.find_element(By.XPATH, '//*[@id="apply-job-button"]')
+			element = driver.find_element(By.XPATH, '//button[@class="jobs-s-apply__button js-apply-button"]')
 			element.click()
 			time.sleep(1)
 			element = driver.find_element(By.XPATH, '//*[@id="file-browse-input"]').send_keys(resume)
 			time.sleep(5)
 			#send-application-button
-			element = driver.find_element(By.XPATH, '//*[@id="send-application-button"]')
+			element = driver.find_element(By.XPATH, '//*[@class="jobs-apply-form__submit-button button-primary-large"]')
 			element.click()
 			time.sleep(1)
 			job_count += 1
